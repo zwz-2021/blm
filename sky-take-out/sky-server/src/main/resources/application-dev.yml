@@ -1,0 +1,8 @@
+sky:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: 117.72.190.135
+    port: 13306
+    database: sky_take_out
+    username: root
+    password: 123456
