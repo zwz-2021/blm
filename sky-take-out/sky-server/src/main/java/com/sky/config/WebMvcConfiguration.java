@@ -19,7 +19,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  * 配置类，注册web层相关组件
  */
 @Configuration
-@Slf4j
+@Slf4j //lombok提供log对象
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
@@ -43,19 +43,25 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      */
     @Bean
     public Docket docket() {
-        ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("苍穹外卖项目接口文档")
+        ApiInfo apiInfo = new ApiInfoBuilder()  //接口文档的信息
+                .title("饱了么项目接口文档")
                 .version("2.0")
-                .description("苍穹外卖项目接口文档")
+                .description("饱了么项目接口文档")
                 .build();
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+        Docket docket = new Docket(DocumentationType.SWAGGER_2) //创建对象
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))//生成接口文档扫描的包
                 .paths(PathSelectors.any())
                 .build();
         return docket;
     }
+
+
+    /*
+     * 因为继承了WebMvcConfigurationSupport，原有的静态资源映射被清除，所以需要手动再把mvc中的静态资源映射配置好
+     * 但是只配置了Knife4j / Swagger的静态资源映射。原因是使用的前后端分离开发，不需要后端提供静态资源了
+     */
 
     /**
      * 设置静态资源映射
