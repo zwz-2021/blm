@@ -6,7 +6,7 @@
         select * from employee
         <where>
             <if test="name != null and name != ''">
-                and name like concat('%',#name,'%') //模糊查询
+                and name like concat('%',#{name},'%')
             </if>
         </where>
         order by create_time desc
