@@ -50,9 +50,10 @@ sky:
       user-token-name: authentication
 
     alioss:
-      endpoint: oss-cn-beijing.aliyuncs.com
-
-      bucket-name: chaojiyk
+      endpoint: ${sky.alioss.endpoint}
+      access-key-id: ${sky.alioss.access-key-id}
+      access-key-secret: ${sky.alioss.access-key-secret}
+      bucket-name: ${sky.alioss.bucket-name}
 
     shop:
       address: 天津北辰区双口镇西平道5340号
