@@ -1,0 +1,11 @@
+version: "3.2"
+
+services:
+  stockbackend:
+    environment:
+      TZ: Asia/Shanghai
+    build: ./backend  #使用这个backend目录下的dockerFile文件将jar包变成镜像
+    image: syk_backend:1.0 #镜像名字
+    container_name: sky_backend_container #容器名字
+    ports:
+      - "8080:8080"
