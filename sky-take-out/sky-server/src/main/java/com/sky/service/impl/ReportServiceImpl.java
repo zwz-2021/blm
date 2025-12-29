@@ -9,6 +9,9 @@ import com.sky.service.WorkspaceService;
 import com.sky.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -249,16 +252,16 @@ public class ReportServiceImpl implements ReportService {
 
         try {
             //基于模板文件创建一个新的Excel文件
-            XSSFWorkbook excel = new XSSFWorkbook(in);
+            HSSFWorkbook excel = new HSSFWorkbook(in);
 
             //获取表格文件的Sheet页
-            XSSFSheet sheet = excel.getSheet("Sheet1");
+            HSSFSheet sheet = excel.getSheet("Sheet1");
 
             //填充数据--时间
             sheet.getRow(1).getCell(1).setCellValue("时间：" + dateBegin + "至" + dateEnd);
 
             //获得第4行
-            XSSFRow row = sheet.getRow(3);
+            HSSFRow row = sheet.getRow(3);
             row.getCell(2).setCellValue(businessDataVO.getTurnover());
             row.getCell(4).setCellValue(businessDataVO.getOrderCompletionRate());
             row.getCell(6).setCellValue(businessDataVO.getNewUsers());
