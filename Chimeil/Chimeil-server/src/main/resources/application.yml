@@ -1,0 +1,71 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${chimeil.datasource.driver-class-name}
+      url: jdbc:mysql://${chimeil.datasource.host}:${chimeil.datasource.port}/${chimeil.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${chimeil.datasource.username}
+      password: ${chimeil.datasource.password}
+  redis:
+    host: ${chimeil.redis.host}
+    port: ${chimeil.redis.port}
+    password: ${chimeil.redis.password}
+    database: ${chimeil.redis.database}
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.chimeil.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    org.springframework.web: debug
+    org.mybatis: debug
+    com:
+      chimeil:
+        mapper: debug
+        service: info
+        controller: info
+
+
+chimeil:
+    jwt:
+      # 设置jwt签名加密时使用的秘钥
+      admin-secret-key: itcast
+      # 设置jwt过期时间
+      admin-ttl: 7200000
+      # 设置前端传递过来的令牌名称
+      admin-token-name: token
+      user-secret-key: itheima
+      user-ttl: 7200000
+      user-token-name: authentication
+
+    alioss:
+      endpoint: ${chimeil.alioss.endpoint}
+      access-key-id: ${chimeil.alioss.access-key-id}
+      access-key-secret: ${chimeil.alioss.access-key-secret}
+      bucket-name: ${chimeil.alioss.bucket-name}
+
+    shop:
+      address: 天津北辰区双口镇西平道5340号
+    baidu:
+      ak: your-ak
+    wechat:
+      appid: ${chimeil.wechat.appid}
+      secret: ${chimeil.wechat.secret}
+      mchid: ${chimeil.wechat.mchid}
+      mchSerialNo: ${chimeil.wechat.mchSerialNo}
+      privateKeyFilePath: ${chimeil.wechat.privateKeyFilePath}
+      apiV3Key: ${chimeil.wechat.apiV3Key}
+      weChatPayCertFilePath: ${chimeil.wechat.weChatPayCertFilePath}
+      notifyUrl: ${chimeil.wechat.notifyUrl}
+      refundNotifyUrl: ${chimeil.wechat.refundNotifyUrl}

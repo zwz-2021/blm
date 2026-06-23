@@ -40,7 +40,7 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.24.2",
+  "libVersion": "2.25.4",
   "appid": "wx380bfb7f0e067979",
   "projectname": "sky-take-out",
   "condition": {},
