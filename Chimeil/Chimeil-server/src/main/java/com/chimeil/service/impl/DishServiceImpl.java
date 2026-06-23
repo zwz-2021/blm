@@ -10,6 +10,7 @@ import com.chimeil.entity.Dish;
 import com.chimeil.entity.DishFlavor;
 import com.chimeil.entity.Setmeal;
 import com.chimeil.exception.DeletionNotAllowedException;
+import com.chimeil.infrastructure.adapter.cache.CacheAdapter;
 import com.chimeil.mapper.DishFlavorMapper;
 import com.chimeil.mapper.DishMapper;
 import com.chimeil.mapper.SetmealDishMapper;
@@ -38,6 +39,8 @@ public class DishServiceImpl implements DishService {
     private SetmealDishMapper setmealDishMapper;
     @Autowired
     private SetmealMapper setmealMapper;
+    @Autowired
+    private CacheAdapter cacheAdapter;
 
     /**
      * 新增菜品和对应的口味
@@ -65,6 +68,8 @@ public class DishServiceImpl implements DishService {
             //向口味表插入n条数据
             dishFlavorMapper.insertBatch(flavors);
         }
+
+        cacheAdapter.evictDishList(dishDTO.getCategoryId());
     }
 
     /**
@@ -108,6 +113,8 @@ public class DishServiceImpl implements DishService {
             //删除菜品关联的口味数据
             dishFlavorMapper.deleteByDishId(id);
         }
+
+        cacheAdapter.evictAllDishLists();
     }
 
     /**
@@ -155,6 +162,8 @@ public class DishServiceImpl implements DishService {
             //向口味表插入n条数据
             dishFlavorMapper.insertBatch(flavors);
         }
+
+        cacheAdapter.evictAllDishLists();
     }
 
     /**
@@ -187,6 +196,9 @@ public class DishServiceImpl implements DishService {
                 }
             }
         }
+
+        cacheAdapter.evictAllDishLists();
+        cacheAdapter.evictAllSetmealLists();
     }
 
     /**

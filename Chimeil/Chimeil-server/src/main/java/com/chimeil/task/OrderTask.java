@@ -1,7 +1,9 @@
 package com.chimeil.task;
 
 import com.chimeil.entity.Orders;
-import com.chimeil.mapper.OrderMapper;
+import com.chimeil.infrastructure.adapter.order.OrderRepository;
+import com.chimeil.service.order.OrderNotificationService;
+import com.chimeil.service.order.OrderStateMachine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +20,11 @@ import java.util.List;
 public class OrderTask {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OrderRepository orderRepository;
+    @Autowired
+    private OrderStateMachine orderStateMachine;
+    @Autowired
+    private OrderNotificationService orderNotificationService;
 
     /**
      * 处理超时订单的方法
@@ -30,14 +36,18 @@ public class OrderTask {
         LocalDateTime time = LocalDateTime.now().plusMinutes(-15);
 
         // select * from orders where status = ? and order_time < (当前时间 - 15分钟)
-        List<Orders> ordersList = orderMapper.getByStatusAndOrderTimeLT(Orders.PENDING_PAYMENT, time);
+        List<Orders> ordersList = orderRepository.getByStatusAndOrderTimeLT(Orders.PENDING_PAYMENT, time);
 
         if(ordersList != null && ordersList.size() > 0){
             for (Orders orders : ordersList) {
+                Integer currentStatus = orders.getStatus();
+                orderStateMachine.assertTransition(currentStatus, Orders.CANCELLED);
                 orders.setStatus(Orders.CANCELLED);
                 orders.setCancelReason("订单超时，自动取消");
                 orders.setCancelTime(LocalDateTime.now());
-                orderMapper.update(orders);
+                if (orderRepository.updateByIdAndStatus(orders, currentStatus) > 0) {
+                    orderNotificationService.notifyStatusChanged(orders);
+                }
             }
         }
     }
@@ -51,12 +61,16 @@ public class OrderTask {
 
         LocalDateTime time = LocalDateTime.now().plusMinutes(-60);
 
-        List<Orders> ordersList = orderMapper.getByStatusAndOrderTimeLT(Orders.DELIVERY_IN_PROGRESS, time);
+        List<Orders> ordersList = orderRepository.getByStatusAndOrderTimeLT(Orders.DELIVERY_IN_PROGRESS, time);
 
         if(ordersList != null && ordersList.size() > 0){
             for (Orders orders : ordersList) {
+                Integer currentStatus = orders.getStatus();
+                orderStateMachine.assertTransition(currentStatus, Orders.COMPLETED);
                 orders.setStatus(Orders.COMPLETED);
-                orderMapper.update(orders);
+                if (orderRepository.updateByIdAndStatus(orders, currentStatus) > 0) {
+                    orderNotificationService.notifyStatusChanged(orders);
+                }
             }
         }
     }

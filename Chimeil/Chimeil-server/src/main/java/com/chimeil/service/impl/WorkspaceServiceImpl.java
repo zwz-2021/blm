@@ -2,10 +2,7 @@ package com.chimeil.service.impl;
 
 import com.chimeil.constant.StatusConstant;
 import com.chimeil.entity.Orders;
-import com.chimeil.mapper.DishMapper;
-import com.chimeil.mapper.OrderMapper;
-import com.chimeil.mapper.SetmealMapper;
-import com.chimeil.mapper.UserMapper;
+import com.chimeil.infrastructure.adapter.statistics.StatisticsRepository;
 import com.chimeil.service.WorkspaceService;
 import com.chimeil.vo.BusinessDataVO;
 import com.chimeil.vo.DishOverViewVO;
@@ -24,13 +21,7 @@ import java.util.Map;
 public class WorkspaceServiceImpl implements WorkspaceService {
 
     @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private DishMapper dishMapper;
-    @Autowired
-    private SetmealMapper setmealMapper;
+    private StatisticsRepository statisticsRepository;
 
     /**
      * 根据时间段统计营业数据
@@ -52,15 +43,15 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         map.put("end",end);
 
         //查询总订单数
-        Integer totalOrderCount = orderMapper.countByMap(map);
+        Integer totalOrderCount = statisticsRepository.countOrdersByMap(map);
 
         map.put("status", Orders.COMPLETED);
         //营业额
-        Double turnover = orderMapper.sumByMap(map);
+        Double turnover = statisticsRepository.sumOrderAmountByMap(map);
         turnover = turnover == null? 0.0 : turnover;
 
         //有效订单数
-        Integer validOrderCount = orderMapper.countByMap(map);
+        Integer validOrderCount = statisticsRepository.countOrdersByMap(map);
 
         Double unitPrice = 0.0;
 
@@ -73,7 +64,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         }
 
         //新增用户数
-        Integer newUsers = userMapper.countByMap(map);
+        Integer newUsers = statisticsRepository.countUsersByMap(map);
 
         return BusinessDataVO.builder()
                 .turnover(turnover)
@@ -96,23 +87,23 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         map.put("status", Orders.TO_BE_CONFIRMED);
 
         //待接单
-        Integer waitingOrders = orderMapper.countByMap(map);
+        Integer waitingOrders = statisticsRepository.countOrdersByMap(map);
 
         //待派送
         map.put("status", Orders.CONFIRMED);
-        Integer deliveredOrders = orderMapper.countByMap(map);
+        Integer deliveredOrders = statisticsRepository.countOrdersByMap(map);
 
         //已完成
         map.put("status", Orders.COMPLETED);
-        Integer completedOrders = orderMapper.countByMap(map);
+        Integer completedOrders = statisticsRepository.countOrdersByMap(map);
 
         //已取消
         map.put("status", Orders.CANCELLED);
-        Integer cancelledOrders = orderMapper.countByMap(map);
+        Integer cancelledOrders = statisticsRepository.countOrdersByMap(map);
 
         //全部订单
         map.put("status", null);
-        Integer allOrders = orderMapper.countByMap(map);
+        Integer allOrders = statisticsRepository.countOrdersByMap(map);
 
         return OrderOverViewVO.builder()
                 .waitingOrders(waitingOrders)
@@ -131,10 +122,10 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     public DishOverViewVO getDishOverView() {
         Map map = new HashMap();
         map.put("status", StatusConstant.ENABLE);
-        Integer sold = dishMapper.countByMap(map);
+        Integer sold = statisticsRepository.countDishesByMap(map);
 
         map.put("status", StatusConstant.DISABLE);
-        Integer discontinued = dishMapper.countByMap(map);
+        Integer discontinued = statisticsRepository.countDishesByMap(map);
 
         return DishOverViewVO.builder()
                 .sold(sold)
@@ -150,10 +141,10 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     public SetmealOverViewVO getSetmealOverView() {
         Map map = new HashMap();
         map.put("status", StatusConstant.ENABLE);
-        Integer sold = setmealMapper.countByMap(map);
+        Integer sold = statisticsRepository.countSetmealsByMap(map);
 
         map.put("status", StatusConstant.DISABLE);
-        Integer discontinued = setmealMapper.countByMap(map);
+        Integer discontinued = statisticsRepository.countSetmealsByMap(map);
 
         return SetmealOverViewVO.builder()
                 .sold(sold)

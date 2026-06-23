@@ -4,3 +4,9 @@
 *.class
 *Test.java
 **/test/
+
+# Local runtime configuration with real service credentials.
+Chimeil-server/src/main/resources/application-dev.yml
+Chimeil-server/src/main/resources/application-local.yml
+Chimeil-server/src/main/resources/application-*.local.yml
+!Chimeil-server/src/main/resources/application-dev.example.yml

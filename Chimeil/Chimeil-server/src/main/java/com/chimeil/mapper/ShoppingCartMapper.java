@@ -25,12 +25,27 @@ public interface ShoppingCartMapper {
     void updateNumberById(ShoppingCart shoppingCart);
 
     /**
+     * 按购物车商品维度原子扣减数量
+     * @param shoppingCart
+     * @return
+     */
+    int decreaseNumber(ShoppingCart shoppingCart);
+
+    /**
+     * 数量为1时删除购物车商品
+     * @param shoppingCart
+     * @return
+     */
+    int deleteOneIfNumberEqualsOne(ShoppingCart shoppingCart);
+
+    /**
      * 插入购物车数据
      * @param shoppingCart
      */
     @Insert("insert into shopping_cart (name, user_id, dish_id, setmeal_id, dish_flavor, number, amount, image, create_time) " +
-            " values (#{name},#{userId},#{dishId},#{setmealId},#{dishFlavor},#{number},#{amount},#{image},#{createTime})")
-    void insert(ShoppingCart shoppingCart);
+            " values (#{name},#{userId},#{dishId},#{setmealId},#{dishFlavor},#{number},#{amount},#{image},#{createTime}) " +
+            " on duplicate key update number = number + values(number)")
+    void insertOrIncrease(ShoppingCart shoppingCart);
 
     /**
      * 根据用户id删除购物车数据

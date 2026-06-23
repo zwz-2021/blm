@@ -44,6 +44,37 @@
         where id = #{id}
     </update>
 
+    <update id="updateByIdAndStatus">
+        update orders
+        <set>
+            <if test="orders.cancelReason != null and orders.cancelReason!='' ">
+                cancel_reason=#{orders.cancelReason},
+            </if>
+            <if test="orders.rejectionReason != null and orders.rejectionReason!='' ">
+                rejection_reason=#{orders.rejectionReason},
+            </if>
+            <if test="orders.cancelTime != null">
+                cancel_time=#{orders.cancelTime},
+            </if>
+            <if test="orders.payStatus != null">
+                pay_status=#{orders.payStatus},
+            </if>
+            <if test="orders.payMethod != null">
+                pay_method=#{orders.payMethod},
+            </if>
+            <if test="orders.checkoutTime != null">
+                checkout_time=#{orders.checkoutTime},
+            </if>
+            <if test="orders.status != null">
+                status = #{orders.status},
+            </if>
+            <if test="orders.deliveryTime != null">
+                delivery_time = #{orders.deliveryTime}
+            </if>
+        </set>
+        where id = #{orders.id} and status = #{expectedStatus}
+    </update>
+
     <select id="pageQuery" resultType="Orders">
         select * from orders
         <where>

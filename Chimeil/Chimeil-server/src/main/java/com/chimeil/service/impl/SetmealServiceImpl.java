@@ -11,6 +11,7 @@ import com.chimeil.entity.Setmeal;
 import com.chimeil.entity.SetmealDish;
 import com.chimeil.exception.DeletionNotAllowedException;
 import com.chimeil.exception.SetmealEnableFailedException;
+import com.chimeil.infrastructure.adapter.cache.CacheAdapter;
 import com.chimeil.mapper.DishMapper;
 import com.chimeil.mapper.SetmealDishMapper;
 import com.chimeil.mapper.SetmealMapper;
@@ -39,6 +40,8 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealDishMapper setmealDishMapper;
     @Autowired
     private DishMapper dishMapper;
+    @Autowired
+    private CacheAdapter cacheAdapter;
 
     /**
      * 新增套餐，同时需要保存套餐和菜品的关联关系
@@ -63,6 +66,8 @@ public class SetmealServiceImpl implements SetmealService {
 
         //保存套餐和菜品的关联关系
         setmealDishMapper.insertBatch(setmealDishes);
+
+        cacheAdapter.evictSetmealList(setmealDTO.getCategoryId());
     }
 
     /**
@@ -101,6 +106,8 @@ public class SetmealServiceImpl implements SetmealService {
             //删除套餐菜品关系表中的数据
             setmealDishMapper.deleteBySetmealId(setmealId);
         });
+
+        cacheAdapter.evictAllSetmealLists();
     }
 
     /**
@@ -139,6 +146,8 @@ public class SetmealServiceImpl implements SetmealService {
         });
         //3、重新插入套餐和菜品的关联关系，操作setmeal_dish表，执行insert
         setmealDishMapper.insertBatch(setmealDishes);
+
+        cacheAdapter.evictAllSetmealLists();
     }
 
     /**
@@ -166,6 +175,8 @@ public class SetmealServiceImpl implements SetmealService {
                 .status(status)
                 .build();
         setmealMapper.update(setmeal);
+
+        cacheAdapter.evictAllSetmealLists();
     }
 
     /**
