@@ -6,19 +6,18 @@ import com.chimeil.entity.OrderDetail;
 import com.chimeil.entity.Orders;
 import com.chimeil.mapper.OrderDetailMapper;
 import com.chimeil.mapper.OrderMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class MybatisOrderRepository implements OrderRepository {
 
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private OrderDetailMapper orderDetailMapper;
+        private final OrderMapper orderMapper;
+        private final OrderDetailMapper orderDetailMapper;
 
     @Override
     public Orders getById(Long id) {

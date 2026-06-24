@@ -2,17 +2,17 @@ package com.chimeil.infrastructure.adapter.cart;
 
 import com.chimeil.entity.ShoppingCart;
 import com.chimeil.mapper.ShoppingCartMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class MybatisShoppingCartAdapter implements ShoppingCartAdapter {
 
-    @Autowired
-    private ShoppingCartMapper shoppingCartMapper;
+        private final ShoppingCartMapper shoppingCartMapper;
 
     @Override
     public List<ShoppingCart> list(ShoppingCart shoppingCart) {

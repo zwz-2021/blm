@@ -5,17 +5,17 @@ import com.chimeil.service.ShopStatusService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController("adminShopController")
 @RequestMapping("/admin/shop")
 @Api(tags = "店铺相关接口")
 @Slf4j
 public class ShopController {
 
-    @Autowired
-    private ShopStatusService shopStatusService;
+        private final ShopStatusService shopStatusService;
 
     /**
      * 设置店铺的营业状态

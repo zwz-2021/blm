@@ -6,7 +6,7 @@ import com.chimeil.properties.JwtProperties;
 import com.chimeil.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * jwt令牌校验的拦截器
  */
+@RequiredArgsConstructor
 @Component
 @Slf4j
 public class JwtTokenUserInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private JwtProperties jwtProperties;
+        private final JwtProperties jwtProperties;
 
     /**
      * 校验jwt

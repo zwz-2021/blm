@@ -8,20 +8,18 @@ import com.chimeil.service.DishService;
 import com.chimeil.service.MenuQueryService;
 import com.chimeil.service.SetmealService;
 import com.chimeil.vo.DishVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Service
 public class MenuQueryServiceImpl implements MenuQueryService {
 
-    @Autowired
-    private CacheAdapter cacheAdapter;
-    @Autowired
-    private DishService dishService;
-    @Autowired
-    private SetmealService setmealService;
+        private final CacheAdapter cacheAdapter;
+        private final DishService dishService;
+        private final SetmealService setmealService;
 
     @Override
     public List<DishVO> listEnabledDishesByCategory(Long categoryId) {

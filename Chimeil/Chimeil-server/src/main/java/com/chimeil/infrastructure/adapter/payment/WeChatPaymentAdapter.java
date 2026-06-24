@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class WeChatPaymentAdapter implements PaymentAdapter {
 

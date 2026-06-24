@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
@@ -67,8 +68,8 @@ public class AutoFillAspect {
                 setCreateUser.invoke(entity,currentId);
                 setUpdateTime.invoke(entity,now);
                 setUpdateUser.invoke(entity,currentId);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ReflectiveOperationException e) {
+                log.error("公共字段自动填充失败(INSERT): {}", e.getMessage(), e);
             }
         }else if(operationType == OperationType.UPDATE){
             //为2个公共字段赋值
@@ -79,8 +80,8 @@ public class AutoFillAspect {
                 //通过反射为对象属性赋值
                 setUpdateTime.invoke(entity,now);
                 setUpdateUser.invoke(entity,currentId);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ReflectiveOperationException e) {
+                log.error("公共字段自动填充失败(INSERT): {}", e.getMessage(), e);
             }
         }
     }

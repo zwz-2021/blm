@@ -18,9 +18,9 @@ import com.chimeil.mapper.SetmealMapper;
 import com.chimeil.result.PageResult;
 import com.chimeil.service.DishService;
 import com.chimeil.vo.DishVO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,18 +29,14 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class DishServiceImpl implements DishService {
 
-    @Autowired
-    private DishMapper dishMapper;
-    @Autowired
-    private DishFlavorMapper dishFlavorMapper;
-    @Autowired
-    private SetmealDishMapper setmealDishMapper;
-    @Autowired
-    private SetmealMapper setmealMapper;
-    @Autowired
-    private CacheAdapter cacheAdapter;
+    private final DishMapper dishMapper;
+    private final DishFlavorMapper dishFlavorMapper;
+    private final SetmealDishMapper setmealDishMapper;
+    private final SetmealMapper setmealMapper;
+    private final CacheAdapter cacheAdapter;
 
     /**
      * 新增菜品和对应的口味

@@ -5,7 +5,7 @@ spring:
   profiles:
     active: dev
   main:
-    allow-circular-references: true
+    allow-circular-references: false
   datasource:
     druid:
       driver-class-name: ${chimeil.datasource.driver-class-name}
@@ -40,12 +40,12 @@ logging:
 chimeil:
     jwt:
       # 设置jwt签名加密时使用的秘钥
-      admin-secret-key: itcast
+      admin-secret-key: ${CHIMEIL_JWT_ADMIN_SECRET_KEY:change-me-in-production}
       # 设置jwt过期时间
       admin-ttl: 7200000
       # 设置前端传递过来的令牌名称
       admin-token-name: token
-      user-secret-key: itheima
+      user-secret-key: ${CHIMEIL_JWT_USER_SECRET_KEY:change-me-in-production}
       user-ttl: 7200000
       user-token-name: authentication
 

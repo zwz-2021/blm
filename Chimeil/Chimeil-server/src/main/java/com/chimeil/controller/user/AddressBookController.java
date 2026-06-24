@@ -6,17 +6,17 @@ import com.chimeil.result.Result;
 import com.chimeil.service.AddressBookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/user/addressBook")
 @Api(tags = "C端地址簿接口")
 public class AddressBookController {
 
-    @Autowired
-    private AddressBookService addressBookService;
+        private final AddressBookService addressBookService;
 
     /**
      * 查询当前登录用户的所有地址信息

@@ -6,7 +6,7 @@ import com.chimeil.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,14 +18,14 @@ import java.util.UUID;
 /**
  * 通用接口
  */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/common")
 @Api(tags = "通用接口")
 @Slf4j
 public class CommonController {
 
-    @Autowired
-    private ObjectStorageAdapter objectStorageAdapter;
+        private final ObjectStorageAdapter objectStorageAdapter;
 
     /**
      * 文件上传

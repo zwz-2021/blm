@@ -2,17 +2,17 @@ package com.chimeil.infrastructure.adapter.notification;
 
 import com.alibaba.fastjson.JSON;
 import com.chimeil.websocket.WebSocketServer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class WebSocketNotificationAdapter implements NotificationAdapter {
 
-    @Autowired
-    private WebSocketServer webSocketServer;
+        private final WebSocketServer webSocketServer;
 
     @Override
     public void notifyNewOrder(Long orderId, String orderNumber) {

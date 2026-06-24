@@ -7,19 +7,19 @@ import com.chimeil.service.ShoppingCartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/user/shoppingCart")
 @Slf4j
 @Api(tags = "C端购物车相关接口")
 public class ShoppingCartController {
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+        private final ShoppingCartService shoppingCartService;
 
     /**
      * 添加购物车

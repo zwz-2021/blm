@@ -9,9 +9,9 @@ import com.chimeil.infrastructure.adapter.cart.ShoppingCartAdapter;
 import com.chimeil.mapper.DishMapper;
 import com.chimeil.mapper.SetmealMapper;
 import com.chimeil.service.ShoppingCartService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,14 +19,12 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
-    @Autowired
-    private ShoppingCartAdapter shoppingCartAdapter;
-    @Autowired
-    private DishMapper dishMapper;
-    @Autowired
-    private SetmealMapper setmealMapper;
+    private final ShoppingCartAdapter shoppingCartAdapter;
+    private final DishMapper dishMapper;
+    private final SetmealMapper setmealMapper;
 
     /**
      * 添加购物车

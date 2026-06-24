@@ -5,24 +5,21 @@ import com.chimeil.mapper.DishMapper;
 import com.chimeil.mapper.OrderMapper;
 import com.chimeil.mapper.SetmealMapper;
 import com.chimeil.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class MybatisStatisticsRepository implements StatisticsRepository {
 
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private DishMapper dishMapper;
-    @Autowired
-    private SetmealMapper setmealMapper;
+        private final OrderMapper orderMapper;
+        private final UserMapper userMapper;
+        private final DishMapper dishMapper;
+        private final SetmealMapper setmealMapper;
 
     @Override
     public Double sumOrderAmountByMap(Map map) {

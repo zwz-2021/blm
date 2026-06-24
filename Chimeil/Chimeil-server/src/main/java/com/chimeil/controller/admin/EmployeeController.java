@@ -14,7 +14,7 @@ import com.chimeil.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,16 +23,15 @@ import java.util.Map;
 /**
  * 员工管理
  */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
 @Api(tags = "员工管理接口")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
-    @Autowired
-    private JwtProperties jwtProperties;
+        private final EmployeeService employeeService;
+        private final JwtProperties jwtProperties;
 
     /**
      * 登录

@@ -5,17 +5,17 @@ import com.chimeil.service.MenuQueryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController("userShopController")
 @RequestMapping("/user/shop")
 @Api(tags = "店铺相关接口")
 @Slf4j
 public class ShopController {
 
-    @Autowired
-    private MenuQueryService menuQueryService;
+        private final MenuQueryService menuQueryService;
 
     /**
      * 获取店铺的营业状态

@@ -10,7 +10,7 @@ import com.chimeil.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +18,14 @@ import java.util.List;
 /**
  * 菜品管理
  */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/dish")
 @Api(tags = "菜品相关接口")
 @Slf4j
 public class DishController {
 
-    @Autowired
-    private DishService dishService;
+        private final DishService dishService;
 
     /**
      * 新增菜品

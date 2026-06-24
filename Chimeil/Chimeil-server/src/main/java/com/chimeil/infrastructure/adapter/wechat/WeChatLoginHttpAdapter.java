@@ -4,19 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.chimeil.properties.WeChatProperties;
 import com.chimeil.utils.HttpClientUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class WeChatLoginHttpAdapter implements WeChatLoginAdapter {
 
     private static final String WX_LOGIN = "https://api.weixin.qq.com/sns/jscode2session";
 
-    @Autowired
-    private WeChatProperties weChatProperties;
+        private final WeChatProperties weChatProperties;
 
     @Override
     public String getOpenid(String code) {

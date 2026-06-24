@@ -5,7 +5,7 @@ import com.chimeil.infrastructure.adapter.order.OrderRepository;
 import com.chimeil.service.order.OrderNotificationService;
 import com.chimeil.service.order.OrderStateMachine;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,16 +15,14 @@ import java.util.List;
 /**
  * 定时任务类，定时处理订单状态
  */
+@RequiredArgsConstructor
 @Component
 @Slf4j
 public class OrderTask {
 
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderStateMachine orderStateMachine;
-    @Autowired
-    private OrderNotificationService orderNotificationService;
+        private final OrderRepository orderRepository;
+        private final OrderStateMachine orderStateMachine;
+        private final OrderNotificationService orderNotificationService;
 
     /**
      * 处理超时订单的方法

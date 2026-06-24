@@ -2,11 +2,18 @@
 .idea
 *.iml
 *.class
-*Test.java
-**/test/
 
-# Local runtime configuration with real service credentials.
+# 本地运行时配置（含真实凭据，禁止提交）
 Chimeil-server/src/main/resources/application-dev.yml
 Chimeil-server/src/main/resources/application-local.yml
 Chimeil-server/src/main/resources/application-*.local.yml
 !Chimeil-server/src/main/resources/application-dev.example.yml
+
+# 日志与临时文件
+*.log
+*.tmp
+*.swp
+*~
+
+# Docker 构建产物（JAR 等）
+docker/backend/app.jar

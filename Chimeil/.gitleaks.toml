@@ -1,0 +1,9 @@
+# Gitleaks 敏感信息扫描配置
+# 排除已知示例/模板文件
+
+[allowlist]
+  paths = [
+    '''application-dev\.example\.yml$''',
+    '''application-local\.example\.yml$''',
+    '''CODE_REVIEW_CHECKLIST\.md$''',
+  ]

@@ -4,7 +4,7 @@ import com.chimeil.interceptor.JwtTokenAdminInterceptor;
 import com.chimeil.interceptor.JwtTokenUserInterceptor;
 import com.chimeil.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -24,14 +24,13 @@ import java.util.List;
 /**
  * 配置类，注册web层相关组件
  */
+@RequiredArgsConstructor
 @Configuration
 @Slf4j //lombok提供log对象
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
-    @Autowired
-    private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
-    @Autowired
-    private JwtTokenUserInterceptor jwtTokenUserInterceptor;
+        private final JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
+        private final JwtTokenUserInterceptor jwtTokenUserInterceptor;
 
     /**
      * 注册自定义拦截器

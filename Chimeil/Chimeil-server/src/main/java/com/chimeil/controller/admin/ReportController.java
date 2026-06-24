@@ -9,7 +9,7 @@ import com.chimeil.vo.UserReportVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +21,14 @@ import java.time.LocalDate;
 /**
  * 数据统计相关接口
  */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/report")
 @Api(tags = "数据统计相关接口")
 @Slf4j
 public class ReportController {
 
-    @Autowired
-    private ReportService reportService;
+        private final ReportService reportService;
 
     /**
      * 营业额统计

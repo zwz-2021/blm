@@ -6,19 +6,19 @@ import com.chimeil.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController("userDishController")
 @RequestMapping("/user/dish")
 @Slf4j
 @Api(tags = "C端-菜品浏览接口")
 public class DishController {
-    @Autowired
-    private MenuQueryService menuQueryService;
+        private final MenuQueryService menuQueryService;
 
     /**
      * 根据分类id查询菜品

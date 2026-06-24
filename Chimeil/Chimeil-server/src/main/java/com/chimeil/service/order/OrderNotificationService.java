@@ -2,14 +2,14 @@ package com.chimeil.service.order;
 
 import com.chimeil.entity.Orders;
 import com.chimeil.infrastructure.adapter.notification.NotificationAdapter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Service
 public class OrderNotificationService {
 
-    @Autowired
-    private NotificationAdapter notificationAdapter;
+        private final NotificationAdapter notificationAdapter;
 
     public void notifyPaid(Orders orders) {
         notificationAdapter.notifyNewOrder(orders.getId(), orders.getNumber());

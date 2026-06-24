@@ -7,8 +7,8 @@ import com.chimeil.properties.WeChatProperties;
 import com.chimeil.service.OrderService;
 import com.wechat.pay.contrib.apache.httpclient.util.AesUtil;
 import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.apache.http.entity.ContentType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +20,13 @@ import java.util.HashMap;
 /**
  * 支付回调相关接口
  */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/notify")
 @Slf4j
 public class PayNotifyController {
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private WeChatProperties weChatProperties;
+        private final OrderService orderService;
+        private final WeChatProperties weChatProperties;
 
     /**
      * 支付成功回调

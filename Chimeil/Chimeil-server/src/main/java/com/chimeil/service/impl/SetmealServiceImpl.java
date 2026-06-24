@@ -19,9 +19,9 @@ import com.chimeil.result.PageResult;
 import com.chimeil.service.SetmealService;
 import com.chimeil.vo.DishItemVO;
 import com.chimeil.vo.SetmealVO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,16 +32,13 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class SetmealServiceImpl implements SetmealService {
 
-    @Autowired
-    private SetmealMapper setmealMapper;
-    @Autowired
-    private SetmealDishMapper setmealDishMapper;
-    @Autowired
-    private DishMapper dishMapper;
-    @Autowired
-    private CacheAdapter cacheAdapter;
+    private final SetmealMapper setmealMapper;
+    private final SetmealDishMapper setmealDishMapper;
+    private final DishMapper dishMapper;
+    private final CacheAdapter cacheAdapter;
 
     /**
      * 新增套餐，同时需要保存套餐和菜品的关联关系

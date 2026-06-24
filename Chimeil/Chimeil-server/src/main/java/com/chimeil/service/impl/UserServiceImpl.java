@@ -8,19 +8,18 @@ import com.chimeil.infrastructure.adapter.user.UserRepository;
 import com.chimeil.infrastructure.adapter.wechat.WeChatLoginAdapter;
 import com.chimeil.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private WeChatLoginAdapter weChatLoginAdapter;
-    @Autowired
-    private UserRepository userRepository;
+        private final WeChatLoginAdapter weChatLoginAdapter;
+        private final UserRepository userRepository;
 
     /**
      * 微信登录

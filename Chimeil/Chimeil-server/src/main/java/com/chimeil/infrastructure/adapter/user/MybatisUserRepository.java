@@ -2,14 +2,14 @@ package com.chimeil.infrastructure.adapter.user;
 
 import com.chimeil.entity.User;
 import com.chimeil.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class MybatisUserRepository implements UserRepository {
 
-    @Autowired
-    private UserMapper userMapper;
+        private final UserMapper userMapper;
 
     @Override
     public User getByOpenid(String openid) {

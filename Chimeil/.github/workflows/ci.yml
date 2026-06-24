@@ -1,0 +1,50 @@
+# CI 流水线：编译 → 测试 → 敏感信息扫描
+# 基于诊断报告 6.3 节要求建立
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 8 ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 设置 JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+
+      - name: 编译项目
+        run: mvn compile -B -q
+
+      - name: 运行单元测试
+        run: mvn test -B
+
+      - name: 输出测试报告
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: JUnit 测试报告
+          path: '**/target/surefire-reports/TEST-*.xml'
+          reporter: java-junit
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 敏感信息扫描
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          config-path: .gitleaks.toml

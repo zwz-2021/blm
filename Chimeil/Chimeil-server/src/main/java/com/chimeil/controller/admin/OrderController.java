@@ -12,20 +12,20 @@ import com.chimeil.vo.OrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * 订单管理
  */
+@RequiredArgsConstructor
 @RestController("adminOrderController")
 @RequestMapping("/admin/order")
 @Slf4j
 @Api(tags = "订单管理接口")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+        private final OrderService orderService;
 
     /**
      * 订单搜索

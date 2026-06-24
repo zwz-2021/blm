@@ -9,19 +9,19 @@ import com.chimeil.vo.DishOverViewVO;
 import com.chimeil.vo.OrderOverViewVO;
 import com.chimeil.vo.SetmealOverViewVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 @Slf4j
 public class WorkspaceServiceImpl implements WorkspaceService {
 
-    @Autowired
-    private StatisticsRepository statisticsRepository;
+        private final StatisticsRepository statisticsRepository;
 
     /**
      * 根据时间段统计营业数据

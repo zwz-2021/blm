@@ -4,21 +4,19 @@ import com.chimeil.constant.MessageConstant;
 import com.chimeil.entity.Orders;
 import com.chimeil.exception.OrderBusinessException;
 import com.chimeil.infrastructure.adapter.order.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class PaymentCallbackHandler {
 
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderStateMachine orderStateMachine;
-    @Autowired
-    private OrderNotificationService orderNotificationService;
+        private final OrderRepository orderRepository;
+        private final OrderStateMachine orderStateMachine;
+        private final OrderNotificationService orderNotificationService;
 
     @Transactional
     public boolean handlePaySuccess(String orderNumber) {

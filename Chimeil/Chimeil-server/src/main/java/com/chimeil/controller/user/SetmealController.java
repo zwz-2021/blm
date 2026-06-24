@@ -7,21 +7,20 @@ import com.chimeil.service.SetmealService;
 import com.chimeil.vo.DishItemVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController("userSetmealController")
 @RequestMapping("/user/setmeal")
 @Api(tags = "C端-套餐浏览接口")
 public class SetmealController {
-    @Autowired
-    private MenuQueryService menuQueryService;
-    @Autowired
-    private SetmealService setmealService;
+        private final MenuQueryService menuQueryService;
+        private final SetmealService setmealService;
 
     /**
      * 条件查询

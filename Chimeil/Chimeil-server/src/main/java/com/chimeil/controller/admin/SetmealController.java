@@ -9,7 +9,7 @@ import com.chimeil.vo.SetmealVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +17,14 @@ import java.util.List;
 /**
  * 套餐管理
  */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin/setmeal")
 @Api(tags = "套餐相关接口")
 @Slf4j
 public class SetmealController {
 
-    @Autowired
-    private SetmealService setmealService;
+        private final SetmealService setmealService;
 
     /**
      * 新增套餐

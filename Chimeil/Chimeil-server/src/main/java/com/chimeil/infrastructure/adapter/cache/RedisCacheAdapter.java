@@ -3,14 +3,15 @@ package com.chimeil.infrastructure.adapter.cache;
 import com.chimeil.constant.StatusConstant;
 import com.chimeil.entity.Setmeal;
 import com.chimeil.vo.DishVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class RedisCacheAdapter implements CacheAdapter {
 
@@ -25,8 +26,7 @@ public class RedisCacheAdapter implements CacheAdapter {
     private static final Duration SETMEAL_LIST_TTL = Duration.ofMinutes(30);
     private static final Duration SHOP_STATUS_TTL = Duration.ofDays(30);
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+        private final RedisTemplate redisTemplate;
 
     @Override
     public List<DishVO> getDishList(Long categoryId) {
