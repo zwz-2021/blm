@@ -1,25 +1,36 @@
 package com.chimeil.infrastructure.adapter.payment;
 
 import com.alibaba.fastjson.JSONObject;
-import com.chimeil.utils.WeChatPayUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Component
 public class WeChatPaymentAdapter implements PaymentAdapter {
 
-    @Autowired
-    private WeChatPayUtil weChatPayUtil;
+    // Demo mode: real WeChat/Alipay payment APIs are disabled until the project has a payment license.
+    // @Autowired
+    // private WeChatPayUtil weChatPayUtil;
 
     @Override
     public JSONObject createPayment(String orderNumber, BigDecimal amount, String description, String openid) throws Exception {
-        return weChatPayUtil.pay(orderNumber, amount, description, openid);
+        JSONObject result = new JSONObject();
+        result.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+        result.put("nonceStr", UUID.randomUUID().toString().replace("-", ""));
+        result.put("package", "mock_prepay_id=" + orderNumber);
+        result.put("signType", "MOCK");
+        result.put("paySign", "mock_pay_success");
+        return result;
     }
 
     @Override
     public String refund(String orderNumber, String refundNumber, BigDecimal refundAmount, BigDecimal totalAmount) throws Exception {
-        return weChatPayUtil.refund(orderNumber, refundNumber, refundAmount, totalAmount);
+        JSONObject result = new JSONObject();
+        result.put("code", "SUCCESS");
+        result.put("message", "mock refund success");
+        result.put("out_trade_no", orderNumber);
+        result.put("out_refund_no", refundNumber);
+        return result.toJSONString();
     }
 }
