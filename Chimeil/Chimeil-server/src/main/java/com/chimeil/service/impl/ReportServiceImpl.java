@@ -3,8 +3,7 @@ package com.chimeil.service.impl;
 import com.chimeil.service.ReportService;
 import com.chimeil.dto.GoodsSalesDTO;
 import com.chimeil.entity.Orders;
-import com.chimeil.mapper.OrderMapper;
-import com.chimeil.mapper.UserMapper;
+import com.chimeil.infrastructure.adapter.statistics.StatisticsRepository;
 import com.chimeil.service.WorkspaceService;
 import com.chimeil.vo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +35,7 @@ import java.util.stream.Collectors;
 public class ReportServiceImpl implements ReportService {
 
     @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private UserMapper userMapper;
+    private StatisticsRepository statisticsRepository;
     @Autowired
     private WorkspaceService workspaceService;
 
@@ -73,7 +70,7 @@ public class ReportServiceImpl implements ReportService {
             map.put("begin", beginTime);
             map.put("end", endTime);
             map.put("status", Orders.COMPLETED);
-            Double turnover = orderMapper.sumByMap(map);
+            Double turnover = statisticsRepository.sumOrderAmountByMap(map);
             turnover = turnover == null ? 0.0 : turnover;
             turnoverList.add(turnover);
         }
@@ -117,11 +114,11 @@ public class ReportServiceImpl implements ReportService {
             map.put("end", endTime);
 
             //总用户数量
-            Integer totalUser = userMapper.countByMap(map);
+            Integer totalUser = statisticsRepository.countUsersByMap(map);
 
             map.put("begin", beginTime);
             //新增用户数量
-            Integer newUser = userMapper.countByMap(map);
+            Integer newUser = statisticsRepository.countUsersByMap(map);
 
             totalUserList.add(totalUser);
             newUserList.add(newUser);
@@ -207,7 +204,7 @@ public class ReportServiceImpl implements ReportService {
         map.put("end",end);
         map.put("status",status);
 
-        return orderMapper.countByMap(map);
+        return statisticsRepository.countOrdersByMap(map);
     }
 
     /**
@@ -220,7 +217,7 @@ public class ReportServiceImpl implements ReportService {
         LocalDateTime beginTime = LocalDateTime.of(begin, LocalTime.MIN);
         LocalDateTime endTime = LocalDateTime.of(end, LocalTime.MAX);
 
-        List<GoodsSalesDTO> salesTop10 = orderMapper.getSalesTop10(beginTime, endTime);
+        List<GoodsSalesDTO> salesTop10 = statisticsRepository.getSalesTop10(beginTime, endTime);
         List<String> names = salesTop10.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());
         String nameList = StringUtils.join(names, ",");
 
